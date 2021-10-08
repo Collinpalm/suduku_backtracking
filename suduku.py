@@ -76,6 +76,10 @@ def solver(board, i, j):
                 board[i][j] = x
                 if(i==8 & j==8):
                     at_end = True
+                else:
+                    if((j+1)%9==0):
+                        i+=1
+                    solver(board, i, (j+1)%9)
     
     if(i==8 & j==8):
             at_end = True       
