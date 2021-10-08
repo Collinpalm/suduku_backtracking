@@ -69,16 +69,16 @@ def solver(board, i, j):
         for x in range(0, 9):
             if(col_nums[x] ==0 & row_nums[x]==0 & square_nums[x]==0):
                 possible.append(x)
-        if(len(possible)>0):
+        if(len(possible)<0):
             valid_moves = False
-        elif(i==8 & j==8):
-            at_end = True
         else:
             for x in possible:
                 board[i][j] = x
-                if(at_end):
-                    break
-            
+                if(i==8 & j==8):
+                    at_end = True
+    
+    if(i==8 & j==8):
+            at_end = True       
     
     
     
