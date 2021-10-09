@@ -1,5 +1,5 @@
 # This is a suduku solver using backtracking
-
+at_end = False
 
 def create_grid():
     grid = [[3,0,6,5,0,8,4,0,0],
@@ -73,6 +73,8 @@ def solver(board, i, j):
             valid_moves = False
         else:
             for x in possible:
+                if(at_end):
+                    return board
                 board[i][j] = x
                 if(i==8 & j==8):
                     at_end = True
