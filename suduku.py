@@ -93,7 +93,9 @@ def solver(board, i, j):
     elif(at_end):
         return board
     else:
-        solver(board)
+        if((j+1)%9==0):
+            i+=1
+            solver(board, i, (j+1)%9)
 
 
 if __name__ == '__main__':
