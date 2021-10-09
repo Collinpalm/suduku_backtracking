@@ -18,7 +18,7 @@ def check_col(board, col):
     arr = [0,0,0,0,0,0,0,0,0]
     for i in range(0, 9):
         if(board[i][col] != 0):
-            arr[board[i][col]] += 1
+            arr[board[i][col]-1] += 1
     
     return arr
 
@@ -26,7 +26,7 @@ def check_row(board, row):
     arr = [0,0,0,0,0,0,0,0,0]
     for j in range(0, 9):
         if(board[row][j] != 0):
-            arr[board[row][j]] += 1
+            arr[board[row][j]-1] += 1
     
     return arr
 
@@ -52,54 +52,48 @@ def check_square(board, row, col):
     for i in range(0, 3):
         for j in range(0,2):
             if(board[row+i][col+j] != 0):
-                arr[board[row+i][col+j]] += 1
+                arr[board[row+i][col+j]-1] += 1
     
     return arr
+
+def check_valid(board, row, col):
+    possible = []
+    col_nums = check_col(board, col)
+    row_nums = check_row(board, row)
+    square_nums = check_square(board, row, col)
+    for x in range(0, 9):
+        if(col_nums[x] == 0 and row_nums[x] ==0 and square_nums[x] ==0):
+            possible.append(x+1)
+    return possible
 
 def solver(board, i, j):
     valid_moves = True
     at_end = False
-    completed = False
     possible = []
+    print(board)
+    print(i, j, sep="--")
+    if(i==8, j==9):
+        return board
+    if(j==9):
+        j=0
+        i+=1
     
     if (board[i][j] == 0):
-        col_nums = check_col(board, j)
-        row_nums = check_row(board, i)
-        square_nums = check_square(board, i, j)
-        for x in range(0, 9):
-            if(col_nums[x] ==0 & row_nums[x]==0 & square_nums[x]==0):
-                possible.append(x)
-        if(len(possible)<0):
-            valid_moves = False
-        else:
-            for x in possible:
-                if(at_end):
-                    return board
-                board[i][j] = x
-                if(i==8 & j==8):
-                    at_end = True
-                else:
-                    if((j+1)%9==0):
-                        i+=1
-                    solver(board, i, (j+1)%9)
-    
-    if(i==8 & j==8):
-            at_end = True       
-    
-    
-    
-    if(not valid_moves):
-        return board
-    elif(at_end):
-        return board
+        return solver(board, i, j+1)
+
+    possible = check_valid(board, i, j)
+    if(len(possible)>0):
+        for x in possible:
+            board[i][j] = x
+            return solver(board, i, j+1)
+          
     else:
-        if((j+1)%9==0):
-            i+=1
-            solver(board, i, (j+1)%9)
+        return solver(board, i, j+1)
 
 
 if __name__ == '__main__':
     grid = create_grid()
-    print(solver(grid, 0, 0))
+    final = solver(grid, 0, 0)
+    print(final)
 
 
