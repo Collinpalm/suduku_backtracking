@@ -1,6 +1,4 @@
 # This is a suduku solver using backtracking
-at_end = False
-
 def create_grid():
     grid = [[3,0,6,5,0,8,4,0,0],
             [5,2,0,0,0,0,0,0,0],
@@ -67,8 +65,6 @@ def check_valid(board, row, col):
     return possible
 
 def solver(board, i, j):
-    valid_moves = True
-    at_end = False
     possible = []
     print(board)
     print(i, j, sep="--")
